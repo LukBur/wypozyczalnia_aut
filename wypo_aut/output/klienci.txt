@@ -1,11 +1,3 @@
-login: KonBug0, nr telefonu: 514643566
-login: KonBug1, nr telefonu: 234532544
-login: MarOey0, nr telefonu: 123423144
-login: AdrBac0, nr telefonu: 123423144
-login: MarOey1, nr telefonu: 12341234
-login: AdrBac1, nr telefonu: 567456576
-login: AdrBac2, nr telefonu: 12341234
-login: KonBug2, nr telefonu: 12412432
-login: DupMar0, nr telefonu: 123412343
-login: LuaBbB0, nr telefonu: 12341234
-login: AdrKuk0, nr telefonu: 1234124
+login: KonBug0, haslo: konradino13pl, nr telefonu: 514345089 wypozyczone auta: 
+login: KrzBan0, haslo: krzysiupl, nr telefonu: 508805508 wypozyczone auta: 
+login: MarPrz0, haslo: 96, nr telefonu: 69 wypozyczone auta: 
