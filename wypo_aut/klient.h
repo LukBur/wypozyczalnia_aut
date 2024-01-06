@@ -20,5 +20,3 @@ public:
     Klient(string login, string haslo, string imie, string nazwisko, const int nr_tel) :
     login(login), haslo(haslo), imie(imie), nazwisko(nazwisko), nr_tel(nr_tel), next(nullptr) {};
 };
-
-Klient* baza = nullptr;
