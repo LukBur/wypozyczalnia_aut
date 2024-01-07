@@ -1,43 +1,48 @@
 #include"setup.h"
-#include<algorithm>
 
-void logowanie() {
+bool logowanie(bool login_ok) {
     ifstream file("klienci.txt");
 
     if (!file.is_open()) {
         cerr << "Błąd w dostępie do bazy klientów" << endl;
-        return;
+        return true;
     }
 
     bool uzytkownikIstnieje = false;
     string login;
     string haslo;
     string line;
+    string imie;
 
     cout << "Podaj login: ";
-    login = "KonBug0";
+    cin >> login;
+
+    cout << "Podaj haslo: ";
+    cin >> haslo;
+
+    string loginPrefix = "login:" + login + ",";
+    string passwordPrefix = "haslo:" + haslo + ",";
 
     while (getline(file, line)) {
-        string desiredLogin = line.find("login: " + login) != string::npos;
-        if (desiredLogin == login) {
-            uzytkownikIstnieje = true; // Update the flag as the user is found
-            cout << "Podaj haslo: ";
-            haslo = "konradino13pl";
-            size_t pos = line.find("haslo: ");
-            if (pos != string::npos) {
-                string password = line.substr(pos + 7);
-                password.erase(remove(password.begin(), password.end(), ' '), password.end());
-                if (password == haslo) {
-                    cout << "Logowanie powiodlo sie" << endl;
-                } else {
-                    cout << "Bledne haslo lub nazwa uzytkownika." << endl;
+        if (line.find(loginPrefix) != string::npos) {
+            uzytkownikIstnieje = true;
+            if (line.find(passwordPrefix) != string::npos) {
+                size_t pos = line.find("imie:");
+                if (pos != string::npos) {
+                    imie = line.substr(pos + 5);
+                    size_t commaPos = imie.find(",");
+                    if (commaPos != string::npos) {
+                        imie = imie.substr(0, commaPos);
+                        cout << "Witaj " << imie << "!" << endl;
+                        login_ok = true;
+                        return login_ok;
+                    }
                 }
-                break; // Exit the loop after processing the user login
             }
         }
     }
 
-    if (!uzytkownikIstnieje) {
-        cout << "Użytkownik nie istnieje." << endl;
-    }
+    cout << "Bledne haslo lub nazwa uzytkownika." << endl;
+    login_ok = false;
+    return login_ok;
 }
