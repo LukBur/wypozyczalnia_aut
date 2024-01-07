@@ -1,18 +1,17 @@
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include "klient.h" // Include necessary headers
+#include"klient.h"
 
-void Rejestracja(Klient*& klient) {
+void rejestracja(Klient*& klient) {
     ifstream file("klienci.txt");
+
     if (!file.is_open()) {
-        cerr << "Error opening the file!" << endl;
+        cerr << "Bład w dostepie do bazy klientów" << endl;
         return;
     }
 
+    string haslo;
     string imie;
     string nazwisko;
-    int nr_tel;
+    string nr_tel;
 
     cout << "podaj imie: ";
     cin >> imie;
@@ -24,23 +23,23 @@ void Rejestracja(Klient*& klient) {
     Klient* tmp = klient;
     int IN = 0; // te same imiona i nazwiska - różne id
 
-    string generatedLogin = imie.substr(0, 3) + nazwisko.substr(0, 3);
+    string login = imie.substr(0, 3) + nazwisko.substr(0, 3);
 
     string line;
     while (getline(file, line)) {
-        if (line.find("login: " + generatedLogin) != string::npos) {
+        if (line.find("login:" + login) != string::npos) {
             IN++;
         }
     }
     file.close();
 
     if (IN > 0) {
-        generatedLogin += to_string(IN);
+        login += to_string(IN);
     } else {
-        generatedLogin += "0";
+        login += "0";
     }
 
-    Klient* newClient = new Klient(generatedLogin, "", imie, nazwisko, nr_tel);
+    Klient* newClient = new Klient(login, "", imie, nazwisko, nr_tel);
 
     if (klient == nullptr) {
         klient = newClient;
@@ -52,13 +51,17 @@ void Rejestracja(Klient*& klient) {
         tmp->next = newClient;
     }
 
+    cout<<"Ustaw nowe haslo: ";
+    cin>>haslo;
+    klient->setHaslo(haslo);
+
     ofstream outFile("klienci.txt", ios::app);
     if (!outFile.is_open()) {
         cerr << "Error opening the file for writing!" << endl;
         return;
     }
 
-    cout << "Twoj login to: " << generatedLogin << endl;
-    outFile << "login: " << generatedLogin << ", nr telefonu: " << nr_tel << endl;
+    cout << "Twoj login to: " << login << endl;
+    outFile <<"imie:"<<imie<<"nazwisko:"<<nazwisko<< "login:" << klient->getLogin() <<",haslo:" << klient->getHaslo() << ",nr_telefonu:" << nr_tel << ",wypozyczone auta:" << endl;
     outFile.close();
 }
