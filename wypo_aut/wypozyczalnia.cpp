@@ -3,7 +3,6 @@
 
 int main(){
     int opcja;
-    char co;
     bool active = true;
     bool login_ok;
     Klient* baza;
